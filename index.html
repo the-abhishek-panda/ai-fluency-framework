@@ -45,6 +45,9 @@ nav a:hover{border-color:var(--line);color:var(--ink)}
 .hero{padding:36px 0 40px;background:var(--brand);color:var(--brand-ink)}
 .hero p{color:inherit;opacity:.9}
 .hero .by{font-size:.85rem;opacity:.75}
+.dl{display:inline-flex;align-items:center;gap:10px;margin-top:6px;padding:12px 20px;min-height:48px;border-radius:12px;background:var(--surface);color:var(--ink);font-weight:700;text-decoration:none;border:2px solid transparent}
+.dl:hover{border-color:var(--c4)}
+.dl svg{width:20px;height:20px;flex:none}
 .dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
 .dbtn{border:0;border-radius:14px;padding:14px 12px;text-align:left;background:var(--surface);color:var(--ink);min-height:84px;display:flex;flex-direction:column;justify-content:space-between}
 .dbtn b{font-family:var(--serif);font-size:1.15rem}
@@ -111,6 +114,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
 <h1>The AI Fluency Framework for Healthcare Professionals</h1>
 <p>AI fluency means working with AI effectively, efficiently, ethically and safely. The framework breaks that into four everyday habits, known as the 4 Ds. This page walks through each one with clinical examples you can try, whatever your speciality.</p>
 <p class="by">About 10 minutes. Works offline. Tap a D to jump in.</p>
+<p><a class="dl" href="poster.gif" download="poster.gif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>Download it as a Poster (GIF)</a></p>
 <div class="dgrid">
 <button class="dbtn" data-d="0"><b>Delegation</b><span>What should AI do?</span></button>
 <button class="dbtn" data-d="1"><b>Description</b><span>How do I ask?</span></button>
