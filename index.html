@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The AI Fluency Framework for Healthcare Professionals</title>
+<meta name="description" content="An interactive explainer of the AI Fluency Framework (Delegation, Description, Discernment, Diligence) for clinicians and healthcare staff from all specialities.">
+<meta name="theme-color" content="#0e3b43">
+<style>
+:root{
+  --bg:#f3f6f6;--surface:#fff;--ink:#14292d;--muted:#51666a;--line:#d3dedf;--brand:#0e3b43;--brand-ink:#fff;
+  --c1:#1f6a8a;--c2:#7b4a9c;--c3:#946200;--c4:#2a7a55;
+  --t1:#e3f0f5;--t2:#f0e9f6;--t3:#f8efd9;--t4:#e2f2ea;
+  --ok:#2a7a55;--bad:#b3392f;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1a1d;--surface:#142629;--ink:#e6f0f0;--muted:#9bb3b6;--line:#2a4144;--brand:#8fd0d6;--brand-ink:#08262a;
+  --c1:#6cb7d9;--c2:#c09be0;--c3:#e3b24a;--c4:#6fcb9c;
+  --t1:#16303a;--t2:#261c33;--t3:#322a14;--t4:#14301f;--ok:#6fcb9c;--bad:#f08a80}}
+:root[data-theme="dark"]{
+  --bg:#0c1a1d;--surface:#142629;--ink:#e6f0f0;--muted:#9bb3b6;--line:#2a4144;--brand:#8fd0d6;--brand-ink:#08262a;
+  --c1:#6cb7d9;--c2:#c09be0;--c3:#e3b24a;--c4:#6fcb9c;
+  --t1:#16303a;--t2:#261c33;--t3:#322a14;--t4:#14301f;--ok:#6fcb9c;--bad:#f08a80}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.6 var(--sans)}
+h1,h2,h3{font-family:var(--serif);line-height:1.2;margin:0 0 .5em;font-weight:700}
+h1{font-size:clamp(1.9rem,7vw,3.2rem)}
+h2{font-size:clamp(1.45rem,4.5vw,2rem)}
+h3{font-size:1.15rem}
+p{margin:0 0 1em;max-width:68ch}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--c1);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+section{padding:44px 0;border-top:1px solid var(--line)}
+.lead{font-size:1.1rem;color:var(--muted)}
+nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav a{white-space:nowrap;text-decoration:none;padding:6px 12px;border-radius:99px;font-size:.9rem;color:var(--muted);border:1px solid transparent}
+nav a:hover{border-color:var(--line);color:var(--ink)}
+.hero{padding:36px 0 40px;background:var(--brand);color:var(--brand-ink)}
+.hero p{color:inherit;opacity:.9}
+.hero .by{font-size:.85rem;opacity:.75}
+.dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
+.dbtn{border:0;border-radius:14px;padding:14px 12px;text-align:left;background:var(--surface);color:var(--ink);min-height:84px;display:flex;flex-direction:column;justify-content:space-between}
+.dbtn b{font-family:var(--serif);font-size:1.15rem}
+.dbtn span{font-size:.82rem;color:var(--muted)}
+.dbtn[data-d="0"]{border-left:8px solid var(--c1)}.dbtn[data-d="1"]{border-left:8px solid var(--c2)}
+.dbtn[data-d="2"]{border-left:8px solid var(--c3)}.dbtn[data-d="3"]{border-left:8px solid var(--c4)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 14px}
+.modes{display:grid;gap:12px;margin:18px 0}
+.mode{border-radius:14px;padding:16px;background:var(--surface);border:1px solid var(--line)}
+.mode h3{margin-bottom:.3em}
+.tag{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:99px;background:var(--line);margin-bottom:8px}
+.tabs{display:flex;gap:6px;margin:16px 0 0;overflow-x:auto;scrollbar-width:none}
+.tab{flex:1 0 auto;padding:10px 14px;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;background:transparent;font-weight:600}
+.tab[aria-selected="true"]{background:var(--surface);box-shadow:inset 0 4px 0 var(--tc)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:0 0 14px 14px;padding:18px;border-top:4px solid var(--tc)}
+.panel[hidden]{display:none}
+.q{font-family:var(--serif);font-size:1.2rem;margin-bottom:.8em}
+details{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:var(--bg)}
+summary{padding:12px 14px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--muted)}
+details[open] summary::after{content:"\2212"}
+details div{padding:0 14px 12px;color:var(--muted)}
+details div b{color:var(--ink)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.opt{padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);min-height:44px}
+.opt:hover{border-color:var(--brand)}
+.opt[aria-pressed="true"]{border-color:var(--brand);background:var(--brand);color:var(--brand-ink)}
+.fb{min-height:3.2em;padding:10px 12px;border-radius:10px;background:var(--bg);border-left:5px solid var(--line)}
+.fb.ok{border-color:var(--ok)}.fb.no{border-color:var(--bad)}
+.btn{padding:10px 16px;border-radius:10px;border:0;background:var(--brand);color:var(--brand-ink);font-weight:600;min-height:44px}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.prog{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;width:0;background:var(--brand);transition:width .3s}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:12px 4px;border-bottom:1px solid var(--line)}
+.chk:last-child{border:0}
+.chk input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--c4)}
+.chk small{display:block;color:var(--muted)}
+.pbox{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;white-space:pre-wrap;font-size:.95rem;min-height:5em}
+.doc{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px 14px;font-size:.95rem}
+.doc p{margin:.5em 0}
+.sent{cursor:pointer;border-radius:4px;padding:1px 2px;border-bottom:2px dotted var(--line)}
+.sent:hover{background:var(--t3)}
+.sent.flag{background:var(--t3);border-bottom-color:var(--c3)}
+.sent.hit{background:var(--t4);border-bottom-color:var(--ok)}
+.sent.miss{background:var(--t1)}
+.sent.over{background:rgba(179,57,47,.15);border-bottom-color:var(--bad)}
+.spec{display:grid;gap:8px;grid-template-columns:1fr}
+.score{font-weight:700}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.theme{background:transparent;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:.85rem;color:var(--muted)}
+footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+@media(min-width:640px){.dgrid{grid-template-columns:repeat(4,1fr)}.modes{grid-template-columns:repeat(3,1fr)}.spec{grid-template-columns:1fr 1fr}.wrap{padding:0 28px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.prog i{transition:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Sections"><div class="wrap">
+<a href="#modes">Three ways to work</a><a href="#ds">The 4 Ds</a><a href="#describe">Description lab</a><a href="#discern">Spot the error</a><a href="#diligence">Diligence check</a><a href="#close">Take-home</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+<div class="tools"><span class="by">Interactive explainer</span><button class="theme" id="theme" aria-label="Toggle light or dark theme">Theme</button></div>
+<h1>The AI Fluency Framework for Healthcare Professionals</h1>
+<p>AI fluency means working with AI effectively, efficiently, ethically and safely. The framework breaks that into four everyday habits, known as the 4 Ds. This page walks through each one with clinical examples you can try, whatever your speciality.</p>
+<p class="by">About 10 minutes. Works offline. Tap a D to jump in.</p>
+<div class="dgrid">
+<button class="dbtn" data-d="0"><b>Delegation</b><span>What should AI do?</span></button>
+<button class="dbtn" data-d="1"><b>Description</b><span>How do I ask?</span></button>
+<button class="dbtn" data-d="2"><b>Discernment</b><span>Is the output good?</span></button>
+<button class="dbtn" data-d="3"><b>Diligence</b><span>Am I responsible?</span></button>
+</div>
+</div></header>
+
+<main class="wrap">
+
+<section id="modes">
+<h2>Three ways of working with AI</h2>
+<p class="lead">The framework describes three modes of interaction. Knowing which one you are in tells you how much oversight is needed.</p>
+<div class="modes">
+<div class="mode"><span class="tag">AI does a defined task</span><h3>Automation</h3><p>You set a clear task and the AI carries it out. Example: reformatting a clinic letter into a standard template.</p></div>
+<div class="mode"><span class="tag">You and AI think together</span><h3>Augmentation</h3><p>A back-and-forth partnership. Example: drafting a patient leaflet, then refining tone and reading level together.</p></div>
+<div class="mode"><span class="tag">AI acts on your behalf</span><h3>Agency</h3><p>You set up an AI that works independently and takes actions. Example: an agent that sorts incoming referrals by the rules you gave it.</p></div>
+</div>
+<div class="card">
+<h3>Try it: which mode is this?</h3>
+<div class="prog" aria-hidden="true"><i id="sprog"></i></div>
+<p class="q" id="sq"></p>
+<div class="opts" id="sopts" role="group" aria-label="Choose a mode">
+<button class="opt" data-m="Automation">Automation</button>
+<button class="opt" data-m="Augmentation">Augmentation</button>
+<button class="opt" data-m="Agency">Agency</button>
+</div>
+<div class="fb" id="sfb" aria-live="polite">Pick the mode that best fits.</div>
+<p style="margin-top:12px"><button class="btn" id="snext" hidden>Next</button></p>
+</div>
+</section>
+
+<section id="ds">
+<h2>The 4 Ds</h2>
+<p class="lead">Each D has three parts. Open them to see what they mean in a clinical setting. Together they form a loop rather than a one-way line: you often return to an earlier D after checking a result.</p>
+<div class="tabs" role="tablist" aria-label="The four Ds" id="tabs"></div>
+<div id="panels"></div>
+</section>
+
+<section id="describe">
+<h2>Description lab</h2>
+<p class="lead">Description is how clearly you tell the AI what you want. Build a request below and watch it improve. Switch the ingredients on one at a time.</p>
+<div class="card">
+<p><b>Starting point:</b> a nurse wants help writing discharge advice for a patient with a new heart failure diagnosis.</p>
+<div class="opts" id="ing" role="group" aria-label="Prompt ingredients"></div>
+<div class="pbox" id="pbox" aria-live="polite"></div>
+<p class="fb" id="pfb" style="margin-top:10px"></p>
+<p style="margin:0;color:var(--muted);font-size:.9rem">Note: never paste real patient identifiers into an AI tool unless your organisation has approved it for that use.</p>
+</div>
+</section>
+
+<section id="discern">
+<h2>Spot the error</h2>
+<p class="lead">Discernment means judging what the AI gives back: is it accurate, appropriate, and complete? Below is a fictional AI-drafted note. Tap every sentence you would want to check or correct, then press Check.</p>
+<div class="card">
+<div class="doc" id="doc"></div>
+<p style="margin-top:12px" class="tools"><span class="score" id="dscore" aria-live="polite">Flagged: 0</span><span><button class="btn alt" id="dreset">Reset</button> <button class="btn" id="dcheck">Check</button></span></p>
+<div class="fb" id="dfb" aria-live="polite" hidden></div>
+</div>
+</section>
+
+<section id="diligence">
+<h2>Diligence checklist</h2>
+<p class="lead">Diligence is taking responsibility for what you create, what you disclose, and what you put into use. Tick what you would do before using an AI output with a patient or colleague.</p>
+<div class="card">
+<div class="prog" aria-hidden="true"><i id="cprog"></i></div>
+<div id="clist"></div>
+<div class="fb" id="cfb" aria-live="polite"></div>
+</div>
+</section>
+
+<section id="close">
+<h2>Take-home</h2>
+<div class="card">
+<h3>One line for each D</h3>
+<p><b>Delegation:</b> decide first what is yours to do, and what is safe to share with AI.<br>
+<b>Description:</b> give context, purpose, and format, not just a topic.<br>
+<b>Discernment:</b> check the result, and check how the AI got there.<br>
+<b>Diligence:</b> you remain accountable, so be open about AI use and protect patients.</p>
+</div>
+<div class="card">
+<h3>Discussion questions for your group</h3>
+<div class="spec" id="disc"></div>
+</div>
+</section>
+
+</main>
+<footer><div class="wrap">
+<p>This is an independent explainer based on the AI Fluency Framework by Rick Dakan and Joseph Feller, developed with Anthropic. Read the full framework and its licence terms at <a href="https://aifluencyframework.org/" rel="noopener">aifluencyframework.org</a> (needs internet; the rest of this page works offline).</p>
+<p>All clinical examples are fictional and for teaching only. They are not clinical guidance. Follow your organisation's policies on AI use and patient data.</p>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+
+/* theme */
+var root=document.documentElement;
+$("#theme").addEventListener("click",function(){
+  var dark=root.getAttribute("data-theme")==="dark"||(!root.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);
+  root.setAttribute("data-theme",dark?"light":"dark");
+});
+
+/* Mode sorter */
+var sc=[
+ ["A tool turns your dictated clinic note into a standard letter layout. You give it the template and it does the rest.","Automation","A defined task with a clear template: you hand it over and review the result."],
+ ["You ask AI to help explain a new diabetes medicine to a worried patient. You go back and forth, changing tone and simplifying words.","Augmentation","Iterative thinking together. You shape the output through conversation."],
+ ["You configure an assistant to watch a shared inbox, sort incoming referrals by your urgency rules, and book triage slots on its own.","Agency","The AI acts independently over time within rules you set. Oversight must be designed in up front."],
+ ["You brainstorm with AI about why an audit showed rising missed appointments, then challenge its ideas one by one.","Augmentation","A thinking partnership. You stay in the loop at every step."],
+ ["A script converts 200 free-text allergy entries into a consistent list format using rules you wrote.","Automation","Rule-based, repeatable, one defined task. Spot-check a sample."]
+];
+var si=0,sdone=false,sscore=0;
+function showS(){
+  var s=sc[si];sdone=false;
+  $("#sq").textContent=s[0];
+  $("#sfb").className="fb";$("#sfb").textContent="Pick the mode that best fits.";
+  $$("#sopts .opt").forEach(function(b){b.disabled=false;b.setAttribute("aria-pressed","false")});
+  $("#snext").hidden=true;
+  $("#sprog").style.width=(si/sc.length*100)+"%";
+}
+$$("#sopts .opt").forEach(function(b){b.addEventListener("click",function(){
+  if(sdone)return;sdone=true;
+  var s=sc[si],ok=b.dataset.m===s[1];if(ok)sscore++;
+  b.setAttribute("aria-pressed","true");
+  var f=$("#sfb");f.className="fb "+(ok?"ok":"no");
+  f.textContent=(ok?"Yes, ":"Not quite. It is ")+s[1]+". "+s[2];
+  var n=$("#snext");n.hidden=false;n.textContent=si===sc.length-1?"See score":"Next";
+  $$("#sopts .opt").forEach(function(x){x.disabled=true});
+  n.focus();
+})});
+$("#snext").addEventListener("click",function(){
+  if(si===sc.length-1){
+    $("#sprog").style.width="100%";
+    $("#sq").textContent="You got "+sscore+" of "+sc.length+".";
+    $("#sfb").className="fb";$("#sfb").textContent="Real work often blends modes. What matters is noticing which one you are in, so you can match your level of oversight.";
+    $("#sopts").hidden=true;this.textContent="Play again";this.onclick=function(){si=0;sscore=0;$("#sopts").hidden=false;this.onclick=null;this.textContent="Next";showS()};
+    return;
+  }
+  si++;showS();
+});
+showS();
+
+/* 4Ds */
+var D=[
+ {n:"Delegation",c:"var(--c1)",q:"Should AI be involved at all, and which tool is right?",
+  items:[
+   ["Problem awareness","Be clear about the goal and the task before you reach for AI. <b>Clinical example:</b> you need a plain-language summary of a guideline for the ward team. AI can help with wording, but you are the one who knows what the team needs."],
+   ["Platform awareness","Know what each tool can and cannot do, where it gets its information, and where your data goes. <b>Clinical example:</b> an approved hospital tool and a free public chatbot may treat patient data very differently."],
+   ["Task delegation","Split the work between you and the AI on purpose. <b>Clinical example:</b> AI drafts the leaflet; you decide the clinical content and sign it off. Decisions that need clinical judgement and accountability stay with you."]]},
+ {n:"Description",c:"var(--c2)",q:"How do I communicate clearly with the AI?",
+  items:[
+   ["Product description","Say what you want: the format, audience, length, and style. <b>Clinical example:</b> \"A one-page leaflet at reading age 11, for adults newly diagnosed with type 2 diabetes.\""],
+   ["Process description","Say how the AI should approach it. <b>Clinical example:</b> \"Ask me what is missing before you write\", or \"list your assumptions first\"."],
+   ["Performance description","Shape how the AI behaves in the conversation. <b>Clinical example:</b> \"Be direct. Tell me when you are unsure rather than guessing.\""]]},
+ {n:"Discernment",c:"var(--c3)",q:"Is what the AI gave me actually good?",
+  items:[
+   ["Product discernment","Judge the output itself: accuracy, relevance, completeness, tone. <b>Clinical example:</b> check doses, units, and drug names against your formulary. AI can sound confident and still be wrong."],
+   ["Process discernment","Look at how it got there. <b>Clinical example:</b> did it skip a step, invent a reference, or quietly change your meaning?"],
+   ["Performance discernment","Notice how the AI behaved with you. <b>Clinical example:</b> is it agreeing too easily, ignoring your constraints, or drifting off task? Adjust your description and try again."]]},
+ {n:"Diligence",c:"var(--c4)",q:"Am I being responsible about how I use this?",
+  items:[
+   ["Creation diligence","Choose tools and approaches thoughtfully, and own the work you make with AI. <b>Clinical example:</b> use only tools your organisation approves for the type of information involved."],
+   ["Transparency diligence","Be honest about where AI was involved, with people who need to know. <b>Clinical example:</b> say so to colleagues, and follow local policy on telling patients."],
+   ["Deployment diligence","Check before you share or act on the result. <b>Clinical example:</b> a clinician reviews AI-drafted patient information before it goes anywhere, and takes responsibility for it."]]}
+];
+var tabs=$("#tabs"),panels=$("#panels");
+D.forEach(function(d,i){
+  var t=el("button","tab",d.n);t.setAttribute("role","tab");t.id="tab"+i;t.setAttribute("aria-controls","pn"+i);t.style.setProperty("--tc",d.c);tabs.appendChild(t);
+  var p=el("div","panel");p.id="pn"+i;p.setAttribute("role","tabpanel");p.setAttribute("aria-labelledby","tab"+i);p.style.setProperty("--tc",d.c);
+  p.appendChild(el("p","q",d.q));
+  d.items.forEach(function(it){var x=el("details",null,"<summary>"+it[0]+"</summary><div>"+it[1]+"</div>");p.appendChild(x)});
+  panels.appendChild(p);
+  t.addEventListener("click",function(){selTab(i)});
+  t.addEventListener("keydown",function(e){
+    var k=e.key,n=null;
+    if(k==="ArrowRight")n=(i+1)%4;else if(k==="ArrowLeft")n=(i+3)%4;
+    if(n!=null){e.preventDefault();selTab(n);$("#tab"+n).focus()}
+  });
+});
+function selTab(i){
+  D.forEach(function(_,j){
+    $("#tab"+j).setAttribute("aria-selected",j===i);
+    $("#tab"+j).tabIndex=j===i?0:-1;
+    $("#pn"+j).hidden=j!==i;
+  });
+}
+selTab(0);
+$$(".dbtn").forEach(function(b){b.addEventListener("click",function(){
+  selTab(+b.dataset.d);$("#ds").scrollIntoView();
+})});
+
+/* Description lab */
+var ING=[
+ ["Context","You are helping a nurse on a cardiology ward in a UK hospital.","Who and where"],
+ ["Audience","The reader is an adult patient newly diagnosed with heart failure, with no medical background.","Who will read it"],
+ ["Format","Write a one-page checklist with short headings and plain words at about a reading age of 11.","What it should look like"],
+ ["Process","Before writing, list any information you are missing and ask me. Do not guess doses or targets.","How to approach it"],
+ ["Safety","Mark anything I must check against local protocols with [CHECK].","Built-in review hooks"]
+];
+var on={};
+var ib=$("#ing");
+ING.forEach(function(g,i){
+  var b=el("button","opt",g[0]);b.setAttribute("aria-pressed","false");b.title=g[2];
+  b.addEventListener("click",function(){on[i]=!on[i];b.setAttribute("aria-pressed",on[i]?"true":"false");renderP()});
+  ib.appendChild(b);
+});
+function renderP(){
+  var parts=["Write discharge advice for heart failure."],n=0;
+  ING.forEach(function(g,i){if(on[i]){parts.push(g[1]);n++}});
+  $("#pbox").textContent=parts.join("\n\n");
+  var m=["Vague. The AI must guess who it is for, how long, and how careful to be. Expect generic output.",
+   "Better. One detail helps, but there is still a lot of guessing.","Getting clearer. Two or three more details will make a big difference.",
+   "Good. The AI now knows the setting, reader, and shape of the answer.","Strong. You have also told it how to work, not just what to make.","Excellent. The request now builds in review points for your own discernment, which is how Description and Discernment support each other."];
+  $("#pfb").textContent=m[n];
+}
+renderP();
+
+/* Spot the error */
+var S=[
+ ["Mr A, 68, was admitted with shortness of breath and ankle swelling.",0],
+ ["Echocardiogram showed an ejection fraction of 25%, and the patient was started on furosemide.",0],
+ ["He has a documented penicillin allergy, so amoxicillin 500 mg three times daily was prescribed for his chest infection.",1,"Contradiction: a documented penicillin allergy and amoxicillin, which is a penicillin. Safety-critical."],
+ ["Daily weights should be recorded and any gain of 5 kg in one day should be reported.",1,"Implausible threshold. Typical advice is a much smaller gain over a day or two. Check your local protocol."],
+ ["Follow-up with the heart failure nurse is arranged within two weeks.",0],
+ ["As shown in Patel et al. (2021), this regimen reduces readmission by 63% in all patients.",1,"A citation and statistic you cannot verify. AI can invent plausible-looking references. Find the source or remove it."]
+];
+var flagged={},checked=false;
+var doc=$("#doc"),p=el("p");
+S.forEach(function(s,i){
+  var sp=el("span","sent",s[0]+" ");sp.tabIndex=0;sp.setAttribute("role","button");sp.setAttribute("aria-pressed","false");
+  function tog(){if(checked)return;flagged[i]=!flagged[i];sp.classList.toggle("flag",flagged[i]);sp.setAttribute("aria-pressed",flagged[i]?"true":"false");$("#dscore").textContent="Flagged: "+Object.keys(flagged).filter(function(k){return flagged[k]}).length}
+  sp.addEventListener("click",tog);
+  sp.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+  p.appendChild(sp);
+});
+doc.appendChild(p);
+$("#dcheck").addEventListener("click",function(){
+  checked=true;var hits=0,over=0,total=0,notes=[];
+  $$(".sent",doc).forEach(function(sp,i){
+    var s=S[i],f=!!flagged[i];sp.classList.remove("flag");
+    if(s[1]){total++;if(f){hits++;sp.classList.add("hit")}else sp.classList.add("miss");notes.push("<li>"+s[2]+"</li>")}
+    else if(f){over++;sp.classList.add("over")}
+  });
+  var fb=$("#dfb");fb.hidden=false;fb.className="fb "+(hits===total?"ok":"no");
+  fb.innerHTML="<b>You caught "+hits+" of "+total+" problems</b>"+(over?" and flagged "+over+" sentence"+(over>1?"s":"")+" that looked fine (red). Over-checking costs time, but it is the safer mistake.":".")+
+   "<ul>"+notes.join("")+"</ul>Notice that none of these look wrong at a glance. That is why discernment is a habit, not a feeling.";
+});
+$("#dreset").addEventListener("click",function(){
+  checked=false;flagged={};$("#dfb").hidden=true;$("#dscore").textContent="Flagged: 0";
+  $$(".sent",doc).forEach(function(s){s.className="sent";s.setAttribute("aria-pressed","false")});
+});
+
+/* Diligence checklist */
+var C=[
+ ["I used a tool approved for this kind of information.","Creation diligence. No identifiable patient data in unapproved tools."],
+ ["I checked facts, doses, and references against trusted sources.","Discernment feeds Diligence. Never rely on AI memory for clinical numbers."],
+ ["I read the whole output, not just the start.","Errors often sit in the middle of confident text."],
+ ["A qualified person reviewed it before it reached a patient.","Deployment diligence. Accountability stays with people."],
+ ["I know my local policy on telling patients and colleagues about AI use.","Transparency diligence."],
+ ["I would be comfortable explaining how I used AI here to my manager or a patient.","A simple test of all three."]
+];
+var cl=$("#clist"),cmsg=["Nothing ticked yet. Which would you do first?","A start. Keep going.","Getting there.","Good habits are forming.","Nearly there.","Almost complete.","Complete. Habits like these make AI use safer for patients and for you."];
+C.forEach(function(c,i){
+  var l=el("label","chk");l.innerHTML='<input type="checkbox"><span>'+c[0]+"<small>"+c[1]+"</small></span>";
+  l.querySelector("input").addEventListener("change",upC);cl.appendChild(l);
+});
+function upC(){var n=$$("#clist input:checked").length;$("#cprog").style.width=(n/C.length*100)+"%";$("#cfb").textContent=cmsg[n]}
+upC();
+
+/* Discussion */
+[["Doctors","Which tasks in your day are yours alone, and which could you safely share with AI?"],
+ ["Nurses and midwives","How would you check an AI-drafted patient leaflet before giving it out?"],
+ ["Allied health","Where could clearer descriptions of your needs improve AI output for your discipline?"],
+ ["Admin and management","Who is accountable when an AI-assisted process goes wrong, and how will you know?"]]
+.forEach(function(d){$("#disc").appendChild(el("div",null,"<b>"+d[0]+"</b><p>"+d[1]+"</p>"))});
+})();
+</script>
+</body>
+</html>
